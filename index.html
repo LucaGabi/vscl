@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <link rel="stylesheet"
+          href="node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.css" />
+    <script src="node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.min.js"></script>
+
+    <script src="node_modules/faker/dist/faker.min.js"></script>
+
+
+
+</head>
+
+<body>
+
+    
+
+    <div id="app" >
+        <dynamic-scroller :items="items" style="height: 400px;  width: 300px;"
+                         :min-item-size="54"
+                         class="scroller">
+            <template v-slot="{ item, index, active }">
+                <dynamic-scroller-item :item="item"
+                                     :active="active"
+                                     :size-dependencies="[item.message,item.avatar]"
+                                     :data-index="index">
+                                     <hr>   
+                    <div class="avatar">
+                        <img :src="item.avatar"
+                             :key="item.avatar"
+                             alt="avatar"
+                             class="image">
+                    </div>
+                    <div class="text">{{ item.message }}</div>
+                </dynamic-scroller-item>
+            </template>
+        </dynamic-scroller>
+    </div>
+
+    <script>
+
+        var items = [];
+        for (let i = 0; i < 500; i++) {
+
+            items.push({
+                id: i,
+                name: faker.name.findName(),
+                message: faker.random.words(50+Math.random( 800)+Math.random( 800)),
+                avatar: faker.image.avatar()
+            })
+
+        }
+
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                items
+            },
+        })
+
+
+    </script>
+
+
+</body>
+
+</html>
